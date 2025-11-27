@@ -1,0 +1,200 @@
+<view class="container">
+  <!-- 头部Logo区域 -->
+  <view class="header">
+    <view class="logo">
+      <text class="studio-name">王政于圈钱工作室</text>
+      <text class="service-text">和平精英晋级赛服务</text>
+    </view>
+  </view>
+
+  <!-- 产品展示区域 -->
+  <view class="product-section">
+    <text class="section-title">服务套餐</text>
+    
+    <!-- 晋级赛选项 -->
+    <view class="option-section">
+      <view class="section-header">
+        <text class="section-heading">晋级赛选择</text>
+      </view>
+      
+      <view class="option-container">
+        <!-- 青铜到白银 -->
+        <view class="competition-option" data-type="bronzeToSilver" data-text="青铜 → 白银" bindtap="selectCompetition">
+          <image class="option-badge" src="/legend_badge.svg" mode="aspectFit"></image>
+          <view class="option-content">
+            <text class="option-text">青铜 → 白银</text>
+            <text class="option-desc">安全晋级，快速完成</text>
+          </view>
+          <text class="option-price">¥30</text>
+        </view>
+        
+        <!-- 白银到黄金 -->
+        <view class="competition-option" data-type="silverToGold" data-text="白银 → 黄金" bindtap="selectCompetition">
+          <image class="option-badge" src="/legend_badge.svg" mode="aspectFit"></image>
+          <view class="option-content">
+            <text class="option-text">白银 → 黄金</text>
+            <text class="option-desc">专业操作，稳定晋级</text>
+          </view>
+          <text class="option-price">¥50</text>
+        </view>
+        
+        <!-- 黄金到铂金 -->
+        <view class="competition-option" data-type="goldToPlatinum" data-text="黄金 → 铂金" bindtap="selectCompetition">
+          <image class="option-badge" src="/legend_badge.svg" mode="aspectFit"></image>
+          <view class="option-content">
+            <text class="option-text">黄金 → 铂金</text>
+            <text class="option-desc">高效服务，优质体验</text>
+          </view>
+          <text class="option-price">¥80</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 设备选项 -->
+    <view class="option-section">
+      <view class="section-header">
+        <text class="section-heading">设备选择</text>
+      </view>
+      
+      <view class="option-container">
+        <view class="device-option {{selectedDevice === 'android' ? 'selected' : ''}}" data-type="android" bindtap="selectDevice">
+          <text class="option-text">安卓Android</text>
+        </view>
+        
+        <view class="device-option {{selectedDevice === 'ios' ? 'selected' : ''}}" data-type="ios" bindtap="selectDevice">
+          <text class="option-text">苹果iOS</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 服务器选项 -->
+    <view class="option-section">
+      <view class="section-header">
+        <text class="section-heading">登录方式</text>
+      </view>
+      
+      <view class="option-container">
+        <view class="server-option {{selectedServer === 'wechat' ? 'selected' : ''}}" data-type="wechat" bindtap="selectServer">
+          <text class="option-text">微信登录</text>
+        </view>
+        
+        <view class="server-option {{selectedServer === 'qq' ? 'selected' : ''}}" data-type="qq" bindtap="selectServer">
+          <text class="option-text">QQ登录</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 价格显示 -->
+    <view class="price-display">
+      <view class="price-label">
+        <text>当前价格：</text>
+      </view>
+      <view class="price-value">
+        <text>¥{{totalPrice}}</text>
+      </view>
+    </view>
+    
+    <!-- 下单按钮 -->
+    <view class="order-button">
+      <button class="submit-btn" bindtap="showOrderForm">立即下单</button>
+    </view>
+  </view>
+  
+  <!-- 服务优势 -->
+  <view class="advantages-section">
+    <text class="section-title">服务优势</text>
+    <view class="advantages-list">
+      <view class="advantage-item">
+        <text class="advantage-text">✓ 专业玩家操作，安全可靠</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-text">✓ 快速完成，高效便捷</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-text">✓ 全程监控，实时反馈</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-text">✓ 隐私保护，绝不泄露个人信息</text>
+      </view>
+      <view class="advantage-item">
+        <text class="advantage-text">✓ 7*20小时客服支持</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 购买须知 -->
+  <view class="notice-section">
+    <text class="section-title">购买须知</text>
+    <view class="notice-list">
+      <view class="notice-item">
+        <text class="notice-text">1. 购买后请提供账号信息给客服</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-text">2. 晋级过程中请不要登录游戏账号</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-text">3. 订单完成时间由打手告知</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-text">4. 如有特殊需求，请提前说明</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 订单表单模态框 -->
+  <view class="modal" wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">确认订单信息</text>
+        <text class="modal-close" bindtap="hideModal">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <!-- 订单信息 -->
+        <view class="order-info">
+          <view class="order-details">
+            <view class="info-row">
+              <text class="info-label">服务类型：</text>
+              <text class="info-value">{{selectedCompetitionText || '请选择服务类型'}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">设备类型：</text>
+              <text class="info-value">{{selectedDevice === 'android' ? '安卓Android' : selectedDevice === 'ios' ? '苹果iOS' : '请选择设备类型'}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">登录方式：</text>
+              <text class="info-value">{{selectedServer === 'wechat' ? '微信登录' : selectedServer === 'qq' ? 'QQ登录' : '请选择登录方式'}}</text>
+            </view>
+            <view class="info-row">
+              <text class="info-label">订单金额：</text>
+              <text class="info-price">¥{{totalPrice}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 表单 -->
+        <view class="form-group">
+          <view class="form-row">
+            <text class="form-label">游戏账号</text>
+            <input class="form-input" placeholder="请输入游戏账号" bindinput="inputAccount" value="{{formData.account}}" />
+          </view>
+          
+          <view class="form-row">
+            <text class="form-label">联系电话</text>
+            <input class="form-input" type="number" placeholder="请输入联系电话" bindinput="inputPhone" value="{{formData.phone}}" />
+          </view>
+          
+          <view class="form-row">
+            <text class="form-label">备注信息</text>
+            <textarea class="form-textarea" placeholder="如有特殊需求，请在此说明" bindinput="inputRemark" value="{{formData.remark}}" />
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="cancel-btn" bindtap="hideModal">取消</button>
+        <button class="confirm-btn" bindtap="submitOrder">提交订单</button>
+      </view>
+    </view>
+  </view>
+</view>

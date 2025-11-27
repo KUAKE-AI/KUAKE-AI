@@ -3,13 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王政于圈钱工作室 - 商品展示</title>
+    <meta name="description" content="王政于圈钱工作室提供专业的和平精英晋级赛服务，帮助玩家轻松获取各类游戏印记。">
+    <meta name="keywords" content="和平精英,晋级赛,印记,游戏服务,王政于圈钱工作室">
+    <title>王政于圈钱工作室 - 和平精英晋级赛服务</title>
     <style>
+        /* CSS变量定义 - 便于主题管理 */
+        :root {
+            --primary-color: #ff6700;
+            --primary-dark: #e55a00;
+            --primary-light: #ffd7b3;
+            --secondary-color: #28a745;
+            --accent-color: #ff8c00;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-tertiary: #999;
+            --bg-primary: #fff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #fff5f0;
+            --border-color: #e0e0e0;
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 30px;
+            --box-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --box-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.15);
+            --box-shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.25);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* 基础重置和通用样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft Yahei", sans-serif;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
         }
 
         /* 头部样式 */
@@ -823,8 +863,8 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <span class="studio-name">王政于圈钱工作室</span>
-                <span class="service-text">优质服务</span>
+                <h1 class="studio-name">王政于圈钱工作室</h1>
+                <p class="service-text">优质服务</p>
             </div>
             <nav>
                 <ul>
@@ -836,34 +876,34 @@
     </header>
 
     <!-- 商品展示区域 -->
-    <section class="product-section">
-        <h2 class="section-title">自营商品</h2>
-        <div class="product-container">
-            <!-- 仅保留无线蓝牙耳机商品卡片 -->
-            <div class="product-card" onclick="showProductDetails()">
-                <img src="competition_banner.svg" alt="和平精英普级赛~印记" class="product-img">
+    <main>
+        <section class="product-section">
+            <h2 class="section-title">我们的服务</h2>
+            <div class="product-container">
+            <!-- 和平精英晋级赛服务卡片 -->
+            <article class="product-card" onclick="showProductDetails()">
+                <img src="competition_banner.svg" alt="和平精英晋级赛印记服务" class="product-img" loading="lazy">
                 <div class="product-info">
-                    <h3 class="product-name">和平精英普级赛~印记</h3>
-                    <p class="product-desc">自己打不上,没关系,来找我们</p>
+                    <h3 class="product-name">和平精英晋级赛~印记</h3>
+                    <p class="product-desc">专业团队代打，轻松获取游戏印记</p>
                     <p class="product-price">¥20.00元起</p>
-                    <button class="add-cart-btn">加入购物车</button>
+                    <button class="add-cart-btn">了解详情</button>
                 </div>
-            </div>
-            <!-- 会员专属商品卡片 -->
-            <div class="product-card" onclick="showProductDetails()" style="border: 2px solid #ff6700; background-color: #fff9f5;">
-                <div style="position: absolute; top: 10px; right: 10px; background-color: #ff6700; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 12px;">
-                    会员专属
-                </div>
-                <img src="competition_banner.svg" alt="和平精英普级赛-印记（老顾客/会员专属商品）" class="product-img">
+            </article>
+            <!-- 会员专属服务卡片 -->
+            <article class="product-card" onclick="showProductDetails()" style="border: 2px solid #ff6700; background-color: #fff9f5;">
+                <div class="member-badge" aria-label="会员专属商品">会员专属</div>
+                <img src="competition_banner.svg" alt="和平精英晋级赛-印记（会员专属特惠）" class="product-img" loading="lazy">
                 <div class="product-info">
-                    <h3 class="product-name">和平精英普级赛-印记（老顾客/会员专属商品）</h3>
-                    <p class="product-desc">自己打不上,没关系,来找我们</p>
+                    <h3 class="product-name">和平精英晋级赛-印记（会员专属特惠）</h3>
+                    <p class="product-desc">老顾客专享优惠，性价比更高的服务</p>
                     <p class="product-price">¥20.00元起</p>
-                    <button class="add-cart-btn">加入购物车</button>
+                    <button class="add-cart-btn">立即选购</button>
                 </div>
-            </div>
+            </article>
         </div>
     </section>
+    </main>
 
     <!-- 页脚 -->
     <footer>
@@ -897,9 +937,9 @@
             
             <div class="modal-body">
                 <!-- 晋级赛选项 -->
-                <div class="competition-options">
-                    <h3>选择晋级赛类型</h3>
-                    <div class="option-container">
+            <section class="competition-options">
+                <h3>选择晋级赛类型</h3>
+                <div class="option-container">
                         <label class="competition-option">
                             <input type="radio" name="competitionType" value="20" checked>
                             <div class="option-details">
@@ -960,10 +1000,9 @@
                             <span class="option-text">QQ登录</span>
                         </label>
                     </div>
-                </div>
-                
+                </section>
                 <!-- 服务优势 -->
-                <div class="service-advantages">
+                <section class="service-advantages">
                     <h3>服务优势</h3>
                     <ul class="advantages-list">
                         <li>✓ 专业玩家操作，安全可靠</li>
@@ -972,10 +1011,9 @@
                         <li>✓ 隐私保护，绝不泄露个人信息</li>
                         <li>✓ 7*20小时客服支持</li>
                     </ul>
-                </div>
-                
+                </section>
                 <!-- 购买须知 -->
-                <div class="purchase-notice">
+                <section class="purchase-notice">
                     <h3>购买须知</h3>
                     <ol class="notice-list">
                         <li>购买后请提供账号信息给客服</li>
@@ -998,7 +1036,7 @@
             
             <div class="modal-body">
                 <!-- 订单信息 -->
-                <div class="order-info">
+                <section class="order-info">
                     <h3>订单详情</h3>
                     <div class="order-details">
                         <p><strong>商品名称:</strong> 和平精英普级赛~印记</p>
@@ -1009,10 +1047,9 @@
                         <p><strong>订单编号:</strong> <span id="orderId">--</span></p>
                         <p><strong>下单时间:</strong> <span id="orderTime">--</span></p>
                     </div>
-                </div>
-                
+                </section>
                 <!-- 用户信息表单 -->
-                <div class="user-info-form">
+                <section class="user-info-form">
                     <h3>个人信息</h3>
                     <div class="form-group">
                         <label for="userName">姓名:</label>
@@ -1385,6 +1422,7 @@
                 closeProductDetailModal();
             } else if (event.target == orderFormModal) {
                 closeOrderFormModal();
+         
             }
         }
         

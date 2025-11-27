@@ -1,0 +1,665 @@
+/* pages/index/index.wxss */
+
+/* CSS变量定义 */
+:root {
+  --primary-color: #ff6700;
+  --primary-dark: #e05800;
+  --secondary-color: #28a745;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f8f8;
+  --bg-tertiary: #f0f0f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --border-radius-sm: 8rpx;
+  --border-radius-md: 16rpx;
+  --border-radius-lg: 24rpx;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* 全局样式 */
+.container {
+  background-color: var(--bg-secondary);
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* 头部样式 */
+.header {
+  background-color: var(--text-primary);
+  padding: 40rpx 20rpx;
+  text-align: center;
+  margin-bottom: 40rpx;
+  position: relative;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8rpx;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.logo {
+  text-align: center;
+}
+
+.studio-name {
+  font-size: 32rpx;
+  color: white;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.service-text {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+  display: block;
+}
+
+/* 产品区域样式 */
+.product-section {
+  padding: 0 30rpx;
+  margin-bottom: 60rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  color: var(--text-primary);
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  padding-left: 20rpx;
+  border-left: 8rpx solid var(--primary-color);
+}
+
+/* 选项区域样式 */
+.option-section {
+  margin-bottom: 40rpx;
+}
+
+.section-header {
+  margin-bottom: 20rpx;
+}
+
+.section-heading {
+  font-size: 32rpx;
+  color: var(--text-primary);
+  font-weight: bold;
+  border-bottom: 4rpx solid var(--primary-color);
+  padding-bottom: 10rpx;
+  display: inline-block;
+}
+
+/* 晋级赛选项样式 */
+.option-container {
+  margin-bottom: 20rpx;
+}
+
+.competition-option {
+  display: flex;
+  align-items: center;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-sm);
+  transition: all var(--transition-normal);
+  border: 2rpx solid transparent;
+}
+
+.competition-option:hover,
+.competition-option.selected {
+  border-color: var(--primary-color);
+  background-color: var(--bg-accent);
+  box-shadow: var(--box-shadow-md);
+}
+
+.option-badge {
+  width: 80rpx;
+  height: 96rpx;
+  margin-right: 20rpx;
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-text {
+  font-size: 32rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+  display: block;
+}
+
+.option-desc {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 5rpx;
+  display: block;
+}
+
+.option-price {
+  font-size: 36rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* 设备和服务器选项样式 */
+.device-option,
+.server-option {
+  display: inline-block;
+  padding: 20rpx 40rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: var(--bg-primary);
+  border: 2rpx solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal);
+}
+
+.device-option:hover,
+.server-option:hover,
+.device-option.selected,
+.server-option.selected {
+  border-color: var(--primary-color);
+  background-color: var(--bg-accent);
+  color: var(--primary-color);
+}
+
+/* 价格显示样式 */
+.price-display {
+  background-color: var(--bg-accent);
+  padding: 25rpx;
+  border-radius: var(--border-radius-md);
+  margin: 30rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-label {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+.price-value {
+  font-size: 44rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* 提交按钮样式 */
+.submit-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius-xl);
+  font-size: 34rpx;
+  padding: 25rpx;
+  margin-top: 20rpx;
+  font-weight: bold;
+  box-shadow: 0 4rpx 12rpx rgba(255, 103, 0, 0.3);
+  transition: all var(--transition-normal);
+}
+
+.submit-btn:active {
+  background-color: var(--primary-dark);
+  box-shadow: 0 2rpx 6rpx rgba(255, 103, 0, 0.3);
+}
+
+/* 服务优势样式 */
+.advantages-section {
+  padding: 0 30rpx;
+  margin-bottom: 60rpx;
+}
+
+.advantage-list {
+  background-color: var(--bg-primary);
+  padding: 30rpx;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.advantage-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.advantage-icon {
+  color: var(--secondary-color);
+  font-size: 32rpx;
+  margin-right: 15rpx;
+  font-weight: bold;
+}
+
+.advantage-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+/* 购买须知样式 */
+.notice-section {
+  padding: 0 30rpx;
+}
+
+.notice-list {
+  background-color: var(--bg-primary);
+  padding: 30rpx;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.notice-item {
+  margin-bottom: 15rpx;
+}
+
+.notice-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 模态框样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  visibility: hidden;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 40rpx;
+  width: 90%;
+  max-width: 600rpx;
+  box-shadow: var(--box-shadow-lg);
+  transform: scale(0.95);
+  transition: transform var(--transition-normal);
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.modal-title {
+  font-size: 36rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+/* 订单信息样式 */
+.order-info {
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid var(--border-color);
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15rpx;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.info-value.price {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 32rpx;
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 25rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  margin-bottom: 10rpx;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 20rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: 28rpx;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
+
+.form-textarea {
+  height: 150rpx;
+  resize: none;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* 表单按钮样式 */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 20rpx;
+  font-size: 32rpx;
+  border-radius: var(--border-radius-md);
+  font-weight: bold;
+  transition: all var(--transition-normal);
+}
+
+.cancel-btn {
+  margin-right: 20rpx;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 2rpx solid var(--border-color);
+}
+
+.confirm-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: 2rpx solid var(--primary-color);
+}
+
+.cancel-btn:active {
+  background-color: var(--border-color);
+}
+
+.confirm-btn:active {
+  background-color: var(--primary-dark);
+}
+
+/* 响应式设计 */
+
+/* 大屏幕手机适配 (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .product-section,
+  .advantages-section,
+  .notice-section {
+    padding: 0 40rpx;
+  }
+  
+  .studio-name {
+    font-size: 36rpx;
+  }
+  
+  .service-text {
+    font-size: 48rpx;
+  }
+  
+  .section-title {
+    font-size: 38rpx;
+  }
+  
+  .competition-option {
+    padding: 30rpx;
+  }
+  
+  .option-badge {
+    width: 100rpx;
+    height: 120rpx;
+  }
+  
+  .option-text {
+    font-size: 34rpx;
+  }
+  
+  .option-desc {
+    font-size: 28rpx;
+  }
+  
+  .option-price {
+    font-size: 40rpx;
+  }
+}
+
+/* 小屏幕平板电脑适配 (768px - 1023px) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 800rpx;
+    margin: 0 auto;
+    padding-top: 30rpx;
+  }
+  
+  .header {
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 60rpx;
+  }
+  
+  .studio-name {
+    font-size: 38rpx;
+  }
+  
+  .service-text {
+    font-size: 52rpx;
+  }
+  
+  .section-title {
+    font-size: 40rpx;
+  }
+  
+  .section-heading {
+    font-size: 36rpx;
+  }
+  
+  .competition-option {
+    padding: 35rpx;
+  }
+  
+  .option-badge {
+    width: 120rpx;
+    height: 144rpx;
+  }
+  
+  .option-text {
+    font-size: 36rpx;
+  }
+  
+  .option-desc {
+    font-size: 28rpx;
+  }
+  
+  .option-price {
+    font-size: 44rpx;
+  }
+  
+  .price-value {
+    font-size: 48rpx;
+  }
+  
+  .modal-content {
+    max-width: 650rpx;
+    padding: 50rpx;
+  }
+  
+  .modal-title {
+    font-size: 40rpx;
+  }
+  
+  .info-label,
+  .info-value {
+    font-size: 32rpx;
+  }
+  
+  .info-value.price {
+    font-size: 36rpx;
+  }
+  
+  .form-label {
+    font-size: 32rpx;
+  }
+  
+  .form-input,
+  .form-textarea {
+    font-size: 32rpx;
+    padding: 25rpx;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    font-size: 36rpx;
+    padding: 25rpx;
+  }
+  
+  .advantage-text,
+  .notice-text {
+    font-size: 32rpx;
+  }
+}
+
+/* 中屏幕平板电脑适配 (1024px - 1279px) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 900rpx;
+    padding-top: 40rpx;
+  }
+  
+  .header {
+    padding: 60rpx 30rpx;
+  }
+  
+  .studio-name {
+    font-size: 40rpx;
+  }
+  
+  .service-text {
+    font-size: 56rpx;
+  }
+  
+  .section-title {
+    font-size: 44rpx;
+  }
+  
+  .option-badge {
+    width: 140rpx;
+    height: 168rpx;
+  }
+  
+  .competition-option {
+    margin-bottom: 30rpx;
+  }
+  
+  .price-display {
+    padding: 35rpx;
+    margin: 40rpx 0;
+  }
+  
+  .price-label {
+    font-size: 36rpx;
+  }
+  
+  .price-value {
+    font-size: 56rpx;
+  }
+  
+  .modal-content {
+    max-width: 750rpx;
+  }
+}
+
+/* 大屏幕设备适配 (1280px及以上) */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1000rpx;
+    padding-top: 50rpx;
+  }
+  
+  .studio-name {
+    font-size: 44rpx;
+  }
+  
+  .service-text {
+    font-size: 60rpx;
+  }
+  
+  .competition-option {
+    padding: 40rpx;
+  }
+  
+  .advantage-list,
+  .notice-list {
+    padding: 40rpx;
+  }
+  
+  .modal-content {
+    max-width: 850rpx;
+    padding: 60rpx;
+  }
+}
+
+/* 小屏幕手机适配 (480px及以下) */
+@media (max-width: 480px) {
+  .competition-option {
+    flex-direction: column;
+    text-align: center;
+    padding: 20rpx;
+  }
+  
+  .option-badge {
+    margin-right: 0;
+    margin-bottom: 15rpx;
+  }
+  
+  .option-content {
+    margin-bottom: 15rpx;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 30rpx;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    margin-right: 0;
+    margin-bottom: 15rpx;
+  }
+}
