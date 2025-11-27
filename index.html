@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王政于圈钱工作室 - 商品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        /* 头部样式 */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1.5rem 1rem; /* 加大header内边距 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column; /* 垂直排列，logo在上导航在下 */
+            align-items: center; /* 整体居中 */
+        }
+
+        .logo {
+            line-height: 1.4;
+            margin-bottom: 1.2rem; /* logo与导航间距 */
+            text-align: center;
+        }
+        .studio-name {
+            font-size: 1.6rem; /* 加大中号字体 */
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .service-text {
+            font-size: 2.4rem; /* 加大大号字体 */
+            font-weight: bold;
+            display: block;
+            color: #ff6700; /* 服务文字加橙色点缀 */
+        }
+
+        /* 导航样式 - 居中+颜色区分 */
+        nav ul {
+            display: flex;
+            list-style: none;
+            background: rgba(255,255,255,0.1); /* 导航背景层 */
+            padding: 0.8rem 2rem;
+            border-radius: 30px; /* 圆角更美观 */
+        }
+
+        nav li {
+            padding: 0 1.8rem;
+            position: relative; /* 用于分隔线定位 */
+        }
+
+        /* 中间添加颜色分隔线 */
+        nav li:first-child::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 2px;
+            background-color: #ff6700; /* 橙色分隔线 */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem; /* 加大导航字体 */
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #ff6700;
+        }
+
+        /* 商品展示区样式 */
+        .product-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            border-left: 5px solid #ff6700;
+            padding-left: 1rem;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 响应式设计：小屏幕时仍显示单个商品 */
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: #ff6700;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .add-cart-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: #ff6700;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .add-cart-btn:hover {
+            background: #e55a00;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+            backdrop-filter: blur(5px); /* 背景模糊效果 */
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto; /* 允许垂直滚动 */
+            padding: 1rem 0;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 1.5rem;
+            border-radius: 16px;
+            max-width: 550px;
+            width: 95%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.3s ease;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(255, 103, 0, 0.1);
+        }
+        
+        /* 模态框标题样式 */
+        .modal-title {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            color: #ff6700;
+        }
+        
+        /* 模态框内容样式 */
+        .modal-body {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            padding: 0 0.5rem;
+        }
+        
+        /* 晋级赛选项样式 */
+        .competition-options h3, .device-options h3, .server-options h3 {
+            color: #333;
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ff6700;
+            display: inline-block;
+        }
+        
+        .option-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .competition-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .competition-option:hover {
+            border-color: #ff6700;
+            background-color: #fff5f0;
+        }
+        
+        /* 选项徽章样式 */
+        .option-badge {
+            width: 60px;
+            height: 72px;
+            object-fit: contain;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .competition-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff6700;
+            cursor: pointer;
+        }
+        
+        .option-text {
+            flex: 1;
+            margin-left: 0.8rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .option-price {
+            font-weight: bold;
+            color: #ff6700;
+            font-size: 1.2rem;
+        }
+        
+        .competition-option input[type="radio"]:checked + .option-text {
+            color: #ff6700;
+            font-weight: bold;
+        }
+        
+        .competition-option input[type="radio"]:checked + .option-text + .option-price {
+            color: #ff4500;
+        }
+        
+        /* 设备选择样式 - 强制显示 */
+        .device-options {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: static !important;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 2px solid #ff6700;
+            clear: both;
+            min-height: 150px;
+            overflow: visible;
+            z-index: 1000 !important;
+        }
+        
+        .server-options {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: static !important;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            min-height: 120px;
+            overflow: visible;
+            z-index: 1000 !important;
+        }
+        
+        .device-options h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-top: 0;
+            padding-top: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .server-options h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+            font-weight: bold;
+        }
+        
+        .device-options h3:first-child,
+        .server-options h3:first-child {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        
+        .device-option {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ff6700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            width: 100%;
+            float: none;
+            min-height: 60px;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .device-option:last-child {
+            margin-right: 0;
+        }
+        
+        .device-option:hover {
+            border-color: #ff6700;
+            background-color: #fff5f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .server-option {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ff6700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            width: 100%;
+            float: none;
+            min-height: 60px;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .server-option:hover {
+            border-color: #ff6700;
+            background-color: #fff5f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .device-option input[type="radio"],
+        .server-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff6700;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .device-option .option-text,
+        .server-option .option-text {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .device-option input[type="radio"]:checked + .option-text,
+        .server-option input[type="radio"]:checked + .option-text {
+            color: #ff6700;
+            font-weight: bold;
+        }
+        
+        /* 确保设备和服务器选项容器正确显示 */
+        .device-options .option-container,
+        .server-options .option-container {
+            display: block;
+            overflow: hidden;
+            clear: both;
+        }
+        
+        /* 服务介绍样式 */
+        .service-intro {
+            background: linear-gradient(135deg, #fff5f0 0%, #fff0e6 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #ff6700;
+        }
+        
+        .service-intro h3 {
+            color: #ff6700;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .intro-text {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        /* 选项详情样式 */
+        .option-details {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            text-align: left;
+        }
+        
+        .option-details .option-text {
+            margin-right: 0.8rem;
+        }
+        
+        .option-desc {
+            color: #999;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.3rem;
+        }
+        
+        /* 选中价格显示样式 */
+        .selected-price {
+            background-color: #fff5f0;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid #ffd7b3;
+            text-align: center;
+            margin: 1rem 0 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(255, 103, 0, 0.1);
+        }
+        
+        .selected-price p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        #currentPrice {
+            color: #ff6700;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* 服务优势样式 */
+        .service-advantages {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px solid #e9ecef;
+        }
+        
+        .service-advantages h3 {
+            color: #28a745;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .advantages-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .advantages-list li {
+            padding: 0.5rem 0;
+            color: #666;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        /* 购买须知样式 */
+        .purchase-notice {
+            background-color: #fff8e6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .purchase-notice h3 {
+            color: #ff8c00;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .notice-list {
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+        
+        .notice-list li {
+            padding: 0.5rem 0;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* 主要按钮样式 */
+        .close-btn {
+            background: linear-gradient(135deg, #ff6700 0%, #ff8c38 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            margin-top: 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(255, 103, 0, 0.3);
+        }
+        
+        .close-btn:hover {
+            background: linear-gradient(135deg, #e55a00 0%, #ff6700 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 103, 0, 0.4);
+        }
+        
+        .close-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 103, 0, 0.3);
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6700;
+            box-shadow: 0 0 0 3px rgba(255, 103, 0, 0.1);
+            background-color: white;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        /* 订单信息样式 */
+        .order-info {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #ff6700;
+        }
+        
+        .order-info h3 {
+            color: #ff6700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .order-details p {
+            margin: 0.6rem 0;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .order-details strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* 用户信息表单样式 */
+        .user-info-form {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #28a745;
+        }
+        
+        .user-info-form h3 {
+            color: #28a745;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* 表单操作按钮样式 */
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        
+        /* 响应式表单样式 */
+        @media (max-width: 768px) {
+            .form-group input,
+            .form-group textarea {
+                padding: 0.7rem;
+                font-size: 0.95rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .close-btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.2rem;
+                width: 95%;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .close-btn {
+                padding: 0.8rem 2rem;
+                min-width: 160px;
+                font-size: 1rem;
+            }
+            
+            .service-intro, .service-advantages, .purchase-notice {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .competition-option, .device-option, .server-option {
+                padding: 0.8rem;
+            }
+            
+            .selected-price {
+                padding: 1rem;
+            }
+            
+            .advantages-list li, .notice-list li {
+                padding: 0.4rem 0;
+                font-size: 0.95rem;
+            }
+            
+            .option-details {
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            
+            .option-badge {
+                width: 50px;
+                height: 60px;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-content {
+                margin: 5% auto;
+                padding: 1rem;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .competition-option {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+                padding: 1rem;
+            }
+            
+            .device-option, .server-option {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .option-price {
+                margin-top: 0.5rem;
+                align-self: flex-end;
+                font-size: 1.1rem;
+            }
+            
+            .option-details {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-badge {
+                width: 50px;
+                height: 60px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .option-text {
+                margin-top: 0.3rem;
+                margin-left: 0;
+            }
+            
+            .option-desc {
+                margin-left: 0;
+                margin-top: 0.3rem;
+            }
+            
+            /* 确保单选按钮在小屏幕上居中对齐 */
+            .competition-option input[type="radio"],
+            .device-option input[type="radio"],
+            .server-option input[type="radio"] {
+                margin-right: 0.8rem;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="studio-name">王政于圈钱工作室</span>
+                <span class="service-text">优质服务</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#" onclick="showAboutInfo()">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 商品展示区域 -->
+    <section class="product-section">
+        <h2 class="section-title">自营商品</h2>
+        <div class="product-container">
+            <!-- 仅保留无线蓝牙耳机商品卡片 -->
+            <div class="product-card" onclick="showProductDetails()">
+                <img src="competition_banner.svg" alt="和平精英普级赛~印记" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-name">和平精英普级赛~印记</h3>
+                    <p class="product-desc">自己打不上,没关系,来找我们</p>
+                    <p class="product-price">¥20.00元起</p>
+                    <button class="add-cart-btn">加入购物车</button>
+                </div>
+            </div>
+            <!-- 会员专属商品卡片 -->
+            <div class="product-card" onclick="showProductDetails()" style="border: 2px solid #ff6700; background-color: #fff9f5;">
+                <div style="position: absolute; top: 10px; right: 10px; background-color: #ff6700; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 12px;">
+                    会员专属
+                </div>
+                <img src="competition_banner.svg" alt="和平精英普级赛-印记（老顾客/会员专属商品）" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-name">和平精英普级赛-印记（老顾客/会员专属商品）</h3>
+                    <p class="product-desc">自己打不上,没关系,来找我们</p>
+                    <p class="product-price">¥20.00元起</p>
+                    <button class="add-cart-btn">加入购物车</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>王政于圈钱工作室 © 2025 版权所有 | 联系电话：151-3627-8129</p>
+    </footer>
+    
+    <!-- 关于我们模态框 -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">关于我们</h2>
+            <div class="modal-body">
+                "王政于圈钱工作室"原夏凯墨工作室-圈钱工作室"
+夏凯墨工作室-圈钱工作室"
+成立于2024年1月5日
+联系邮箱newrhine@yeah.net
+            </div>
+            <button class="close-btn" onclick="closeModal()">关闭</button>
+        </div>
+    </div>
+    
+    <!-- 商品详情模态框 -->
+    <div id="productDetailModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">和平精英普级赛~印记</h2>
+            
+            <!-- 服务介绍 -->
+            <div class="service-intro">
+                <h3>服务介绍</h3>
+                <p class="intro-text">我们提供专业的和平精英晋级赛服务，帮助你轻松获取各类印记。由经验丰富的专业玩家操作，确保安全高效完成。</p>
+            </div>
+            
+            <div class="modal-body">
+                <!-- 晋级赛选项 -->
+                <div class="competition-options">
+                    <h3>选择晋级赛类型</h3>
+                    <div class="option-container">
+                        <label class="competition-option">
+                            <input type="radio" name="competitionType" value="20" checked>
+                            <div class="option-details">
+                                <span class="option-text">卓越普级赛</span>
+                                <small class="option-desc">基础级晋级服务，稳定可靠</small>
+                            </div>
+                            <span class="option-price">¥20.00</span>
+                        </label>
+                        <label class="competition-option">
+                            <input type="radio" name="competitionType" value="25">
+                            <div class="option-details">
+                                <img src="legend_badge.svg" alt="传奇徽章" class="option-badge">
+                                <span class="option-text">传奇普级赛</span>
+                                <small class="option-desc">中级晋级服务，更高胜率保障</small>
+                            </div>
+                            <span class="option-price">¥25.00</span>
+                        </label>
+                        <label class="competition-option">
+                            <input type="radio" name="competitionType" value="35">
+                            <div class="option-details">
+                                <img src="godlike_badge.svg" alt="绝世徽章" class="option-badge">
+                                <span class="option-text">绝世普级赛</span>
+                                <small class="option-desc">高级晋级服务，最快完成时间</small>
+                            </div>
+                            <span class="option-price">¥35.00</span>
+                        </label>
+                    </div>
+                    <div class="selected-price">
+                        <p>当前选择: <span id="currentPrice">¥20.00</span></p>
+                    </div>
+                </div>
+                
+                <!-- 设备服务区选择 -->
+                <div class="device-options">
+                    <h3>设备选择</h3>
+                    <div class="option-container">
+                        <label class="device-option">
+                            <input type="radio" name="deviceType" value="android" checked>
+                            <span class="option-text">安卓设备</span>
+                        </label>
+                        <label class="device-option">
+                            <input type="radio" name="deviceType" value="ios">
+                            <span class="option-text">苹果iOS</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 服务器选择 - 微信QQ单选 -->
+                <div class="server-options">
+                    <h3>登录方式</h3>
+                    <div class="option-container">
+                        <label class="server-option">
+                            <input type="radio" name="serverType" value="wechat" checked>
+                            <span class="option-text">微信登录</span>
+                        </label>
+                        <label class="server-option">
+                            <input type="radio" name="serverType" value="qq">
+                            <span class="option-text">QQ登录</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 服务优势 -->
+                <div class="service-advantages">
+                    <h3>服务优势</h3>
+                    <ul class="advantages-list">
+                        <li>✓ 专业玩家操作，安全可靠</li>
+                        <li>✓ 快速完成，高效便捷</li>
+                        <li>✓ 全程监控，实时反馈</li>
+                        <li>✓ 隐私保护，绝不泄露个人信息</li>
+                        <li>✓ 7*20小时客服支持</li>
+                    </ul>
+                </div>
+                
+                <!-- 购买须知 -->
+                <div class="purchase-notice">
+                    <h3>购买须知</h3>
+                    <ol class="notice-list">
+                        <li>购买后请提供账号信息给客服</li>
+                        <li>晋级过程中请不要登录游戏账号</li>
+                        <li>订单完成时间由打手告知</li>
+                        <li>如有特殊需求，请提前说明</li>
+                        <li>订单完成时间由打手告知</li>
+                
+                    </ol>
+                </div>
+            </div>
+            <button class="close-btn" onclick="showOrderFormModal()">立即购买</button>
+        </div>
+    </div>
+    
+    <!-- 服务单模态框 -->
+    <div id="orderFormModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">确认订单信息</h2>
+            
+            <div class="modal-body">
+                <!-- 订单信息 -->
+                <div class="order-info">
+                    <h3>订单详情</h3>
+                    <div class="order-details">
+                        <p><strong>商品名称:</strong> 和平精英普级赛~印记</p>
+                        <p><strong>服务类型:</strong> <span id="selectedServiceType">卓越普级赛</span></p>
+                        <p><strong>设备类型:</strong> <span id="selectedDeviceType">安卓设备</span></p>
+                        <p><strong>登录方式:</strong> <span id="selectedServerType">微信登录</span></p>
+                        <p><strong>订单金额:</strong> <span id="orderAmount">¥20.00</span></p>
+                        <p><strong>订单编号:</strong> <span id="orderId">--</span></p>
+                        <p><strong>下单时间:</strong> <span id="orderTime">--</span></p>
+                    </div>
+                </div>
+                
+                <!-- 用户信息表单 -->
+                <div class="user-info-form">
+                    <h3>个人信息</h3>
+                    <div class="form-group">
+                        <label for="userName">姓名:</label>
+                        <input type="text" id="userName" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">联系电话:</label>
+                        <input type="tel" id="userPhone" placeholder="请输入您的手机号码" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">电子邮箱:</label>
+                        <input type="email" id="userEmail" placeholder="请输入您的电子邮箱（选填）">
+                    </div>
+                    <div class="form-group">
+                        <label for="gameAccount">游戏账号:</label>
+                        <input type="text" id="gameAccount" placeholder="请输入您的游戏账号" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMessage">备注信息:</label>
+                        <textarea id="userMessage" placeholder="如有特殊需求，请在此说明（选填）"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="close-btn" style="display: inline-block; margin-right: 1rem;" onclick="closeOrderFormModal()">取消</button>
+                <button class="close-btn" style="display: inline-block; background: #28a745;" onclick="submitOrder()">提交订单</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入html2canvas库用于截图 -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <script>
+        // 获取模态框
+        const modal = document.getElementById("aboutModal");
+        const productModal = document.getElementById("productDetailModal");
+        const orderFormModal = document.getElementById("orderFormModal");
+        
+        // 初始化单选按钮事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioButtons = document.querySelectorAll('input[name="competitionType"]');
+            const currentPriceEl = document.getElementById('currentPrice');
+            
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    currentPriceEl.textContent = `¥${this.value}.00`;
+                });
+            });
+        });
+        
+        // 显示关于我们模态框
+        function showAboutInfo() {
+            modal.style.display = "block";
+        }
+        
+        // 显示商品详情模态框
+        function showProductDetails() {
+            productModal.style.display = "block";
+        }
+        
+        // 关闭关于我们模态框
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        
+        // 关闭商品详情模态框
+        function closeProductDetailModal() {
+            productModal.style.display = "none";
+        }
+        
+        // 显示订单表单模态框
+        function showOrderFormModal() {
+            // 关闭商品详情模态框
+            productModal.style.display = "none";
+            
+            // 收集用户选择的商品信息
+            const competitionTypeEl = document.querySelector('input[name="competitionType"]:checked');
+            const deviceTypeEl = document.querySelector('input[name="deviceType"]:checked');
+            const serverTypeEl = document.querySelector('input[name="serverType"]:checked');
+            
+            // 获取服务类型文本
+            let serviceTypeText = "";
+            const competitionLabels = document.querySelectorAll('.competition-option');
+            competitionLabels.forEach(label => {
+                if (label.querySelector('input[type="radio"]').checked) {
+                    serviceTypeText = label.querySelector('.option-text').textContent;
+                }
+            });
+            
+            // 获取设备类型文本
+            const deviceTypeText = deviceTypeEl.value === 'android' ? '安卓设备' : '苹果iOS';
+            
+            // 获取登录方式文本
+            const serverTypeText = serverTypeEl.value === 'wechat' ? '微信登录' : 'QQ登录';
+            
+            // 生成订单信息
+            const orderTime = new Date();
+            const formattedTime = orderTime.getFullYear() + '-' + 
+                                 String(orderTime.getMonth() + 1).padStart(2, '0') + '-' + 
+                                 String(orderTime.getDate()).padStart(2, '0') + ' ' + 
+                                 String(orderTime.getHours()).padStart(2, '0') + ':' + 
+                                 String(orderTime.getMinutes()).padStart(2, '0') + ':' + 
+                                 String(orderTime.getSeconds()).padStart(2, '0');
+            
+            // 生成订单编号 (格式: HHmmssSSS + 4位随机数)
+            const timestamp = orderTime.getTime().toString().slice(-9);
+            const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            const orderId = timestamp + randomNum;
+            
+            // 填充订单信息
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('orderTime').textContent = formattedTime;
+            document.getElementById('selectedServiceType').textContent = serviceTypeText;
+            document.getElementById('selectedDeviceType').textContent = deviceTypeText;
+            document.getElementById('selectedServerType').textContent = serverTypeText;
+            document.getElementById('orderAmount').textContent = `¥${competitionTypeEl.value}.00`;
+            
+            // 显示订单表单模态框
+            orderFormModal.style.display = "block";
+        }
+        
+        // 关闭订单表单模态框
+        function closeOrderFormModal() {
+            orderFormModal.style.display = "none";
+        }
+        
+        // 提交订单
+        function submitOrder() {
+            // 获取表单数据
+            const userName = document.getElementById('userName').value;
+            const userPhone = document.getElementById('userPhone').value;
+            const userEmail = document.getElementById('userEmail').value;
+            const gameAccount = document.getElementById('gameAccount').value;
+            const userMessage = document.getElementById('userMessage').value;
+            
+            // 表单验证
+            if (!userName || !userPhone || !gameAccount) {
+                alert('请填写必填项：姓名、联系电话和游戏账号');
+                return;
+            }
+            
+            // 获取订单信息
+            const serviceType = document.getElementById('selectedServiceType').textContent;
+            const deviceType = document.getElementById('selectedDeviceType').textContent;
+            const serverType = document.getElementById('selectedServerType').textContent;
+            const orderAmount = document.getElementById('orderAmount').textContent;
+            const orderId = document.getElementById('orderId').textContent;
+            const orderTime = document.getElementById('orderTime').textContent;
+            
+            // 显示服务单确认信息
+            showServiceOrder(orderId, orderTime, serviceType, deviceType, serverType, orderAmount, userName, userPhone, gameAccount, userMessage, userEmail);
+        }
+        
+        // 显示服务单
+        function showServiceOrder(orderId, orderTime, serviceType, deviceType, serverType, orderAmount, userName, userPhone, gameAccount, userMessage, userEmail) {
+            // 创建服务单内容
+            const serviceOrderContent = `
+                <div id="serviceOrderCard" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 2px solid #ff6700; border-radius: 12px; background-color: #fff;">
+                    <h2 style="color: #ff6700; text-align: center; border-bottom: 2px solid #ff6700; padding-bottom: 10px;">和平精英服务单</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #333; margin-bottom: 10px;">订单信息</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>订单编号:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${orderId}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>下单时间:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${orderTime}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>商品名称:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">和平精英普级赛~印记</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>服务类型:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${serviceType}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>设备类型:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${deviceType}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>登录方式:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${serverType}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>订单金额:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee; color: #ff6700; font-weight: bold;">${orderAmount}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #333; margin-bottom: 10px;">客户信息</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>姓名:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${userName}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>联系电话:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${userPhone}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>电子邮箱:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${userEmail || '未提供'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>游戏账号:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${gameAccount}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>备注信息:</strong></td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">${userMessage || '无'}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                        <h4 style="color: #28a745; margin-top: 0;">温馨提示</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>请保持电话畅通，客服将在1小时内与您联系</li>
+                            <li>请你将本页面截图，发送至“夏凯墨服务”公众号，或添e151W3008分部高管打手</li>
+                            <li>如有疑问，请联系客服电话：151-3627-8129</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px; color: #999; font-size: 12px;">
+                        <p>王政于圈钱工作室 © 2025 版权所有</p>
+                        <p>联系邮箱: newrhine@yeah.net</p>
+                    </div>
+                </div>
+            `;
+            
+            // 创建临时服务单容器
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'fixed';
+            tempContainer.style.top = '50%';
+            tempContainer.style.left = '50%';
+            tempContainer.style.transform = 'translate(-50%, -50%)';
+            tempContainer.style.zIndex = '9999';
+            tempContainer.style.backgroundColor = 'white';
+            tempContainer.style.padding = '20px';
+            tempContainer.style.borderRadius = '12px';
+            tempContainer.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+            tempContainer.innerHTML = serviceOrderContent;
+            document.body.appendChild(tempContainer);
+            
+            // 等待DOM渲染完成
+            setTimeout(() => {
+                // 使用html2canvas截取服务单
+                html2canvas(document.getElementById('serviceOrderCard'), {
+                    scale: 2, // 提高清晰度
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    letterRendering: true,
+                    allowTaint: false
+                }).then(canvas => {
+                    // 将canvas转换为图片URL
+                    const imgDataUrl = canvas.toDataURL('image/png');
+                    
+                    // 创建下载链接（在实际场景中可能需要先保存到服务器）
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = imgDataUrl;
+                    downloadLink.download = `和平精英服务单_${orderId}.png`;
+                    
+                    // 模拟服务单发送到邮箱
+                    sendServiceOrderEmail(orderId, serviceType, orderAmount, imgDataUrl, userName, userPhone, gameAccount);
+                    
+                    // 显示成功提示
+                    alert(`服务单已生成并发送！\n\n订单编号: ${orderId}\n服务类型: ${serviceType}\n金额: ${orderAmount}\n\n我们已将详细服务单发送至邮箱: newrhine@yeah.net\n请保持电话畅通，客服将尽快与您联系。`);
+                    
+                    // 清理临时容器
+                    document.body.removeChild(tempContainer);
+                    
+                    // 关闭订单表单模态框
+                    closeOrderFormModal();
+                }).catch(error => {
+                    console.error('截图失败:', error);
+                    // 如果截图失败，仍继续处理
+
+                    
+                    // 清理临时容器
+                    document.body.removeChild(tempContainer);
+                    
+                    // 关闭订单表单模态框
+                    closeOrderFormModal();
+                });
+            }, 100);
+        }
+        
+        // 发送服务单邮件
+        function sendServiceOrderEmail(orderId, serviceType, orderAmount, imgDataUrl, userName, userPhone, gameAccount) {
+            // 在实际项目中，这里应该调用后端API发送邮件
+            // 由于浏览器环境限制，我们使用模拟方式
+            
+            console.log('准备发送服务单邮件...');
+            console.log('收件人: newrhine@yeah.net');
+            console.log('订单编号:', orderId);
+            console.log('服务类型:', serviceType);
+            console.log('订单金额:', orderAmount);
+            console.log('客户信息:', userName, userPhone, gameAccount);
+            
+            // 这里模拟邮件发送过程
+            // 在实际环境中，我们需要将图片数据发送到后端，由后端处理邮件发送
+            // 模拟API请求
+            const emailData = {
+                to: 'newrhine@yeah.net',
+                subject: `和平精英服务单 - 订单号${orderId}`,
+                orderInfo: {
+                    orderId: orderId,
+                    serviceType: serviceType,
+                    orderAmount: orderAmount,
+                    userName: userName,
+                    userPhone: userPhone,
+                    gameAccount: gameAccount
+                },
+                // 在实际应用中，我们不会直接发送base64图片，而是将图片保存到服务器后发送URL
+                screenshot: imgDataUrl
+            };
+            
+            // 模拟API调用
+            console.log('邮件数据:', emailData);
+            console.log('服务单邮件模拟发送成功');
+            
+            // 在实际项目中的后端API调用示例:
+            /*
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emailData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('邮件发送成功:', data);
+            })
+            .catch(error => {
+                console.error('邮件发送失败:', error);
+            });
+            */
+        }
+        
+        // 模拟发送邮件函数（实际项目中需要后端支持）
+        function sendEmail(to, subject, content) {
+            // 在实际项目中，这里会调用后端API发送邮件
+            console.log(`发送邮件至: ${to}`);
+            console.log(`主题: ${subject}`);
+            console.log(`内容: ${content}`);
+            
+            // 模拟异步发送
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({ success: true, message: '邮件发送成功' });
+                }, 1000);
+            });
+        }
+        
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            } else if (event.target == productModal) {
+                closeProductDetailModal();
+            } else if (event.target == orderFormModal) {
+                closeOrderFormModal();
+            }
+        }
+        
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                if (modal.style.display === 'block') {
+                    closeModal();
+                } else if (productModal.style.display === 'block') {
+                    closeProductDetailModal();
+                } else if (orderFormModal.style.display === 'block') {
+                    closeOrderFormModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
